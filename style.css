@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    font-family: 'Cairo', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.canvas-area {
+    width: 900px;
+    height: 600px;
+    position: relative;
+}
+
+.page {
+    background-color: #fdfaf3; /* لون ورقي */
+    padding: 30px;
+    box-sizing: border-box;
+    border: 1px solid #dcdcdc;
+    box-shadow: inset -5px 0 50px rgba(0,0,0,0.05);
+}
+
+.page-cover {
+    background-color: #c4b49d; /* لون الغلاف في الصورة */
+    color: #4a3f35;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: none;
+}
+
+.page-header {
+    border-bottom: 2px solid #c4b49d;
+    padding-bottom: 10px;
+    color: #4a3f35;
+}
+
+/* تنسيق المدخلات */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+input, textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.5);
+    font-family: 'Cairo', sans-serif;
+}
+
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+button {
+    background-color: #4a3f35;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #635547;
+}
+
+.messages-list {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.message-item {
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
