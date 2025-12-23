@@ -68,6 +68,13 @@ button {
     cursor: pointer;
     font-weight: bold;
 }
+.page-cover h1 {
+    background: linear-gradient(45deg, #ffd700, #ffae00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    text-shadow: none; /* إزالة الظل القديم ليظهر التدرج */
+}
 .page-cover {
     position: relative;
     overflow: hidden; /* لمنع الصورة من الخروج عن الدفتر */
