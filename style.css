@@ -68,3 +68,25 @@ button {
     cursor: pointer;
     font-weight: bold;
 }
+/* تنسيق صورة الغلاف */
+.profile-img-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 5px solid #fdfaf3; /* إطار أبيض حول الصورة */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* لضمان عدم تمدد الصورة بشكل خاطئ */
+}
+
+/* تعديل حجم الخط للعنوان تحت الصورة */
+.page-cover h1 {
+    font-size: 1.8rem !important;
+    margin-top: 10px;
+}
