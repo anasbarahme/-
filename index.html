@@ -14,6 +14,9 @@ body {
   align-items: center;     /* توسيط عمودي */
   background: #f2f2f2;
 }
+  .page.active {
+  display: block;
+}
 
 .book-container {
   width: 900px;
@@ -21,6 +24,7 @@ body {
 }
 
 .page{
+  display: none;
   width:50%;height:100%;background:#fdfaf5;position:absolute;top:0;
   padding:30px;box-sizing:border-box;
   box-shadow:0 0 15px rgba(0,0,0,.2);
@@ -49,6 +53,16 @@ button{padding:8px 18px;font-family:'Amiri';font-size:16px;cursor:pointer;}
 <body>
    <div class="book-container">
     <div class="book">
+      <div class="page cover active">
+  <h1>دفتر التخرج</h1>
+  <h2>أنس البراهمة</h2>
+  <p>دفعة 2026</p>
+</div>
+
+<div class="page">
+  <textarea></textarea>
+</div>
+
 
   <button onclick="prevPage()">◀ السابق</button>
   <button onclick="nextPage()">التالي ▶</button>
@@ -56,40 +70,31 @@ button{padding:8px 18px;font-family:'Amiri';font-size:16px;cursor:pointer;}
 </div>
 
 <script>
-const totalPages = 100;
-let current = 0;
-const book = document.getElementById('book');
+let currentPage = 0;
+const pages = document.querySelectorAll('.page');
 
-function createPages(){
-  // غلاف
-  const cover = document.createElement('div');
-  cover.className='page right cover';
-  cover.innerHTML='<h1>دفتر التخرج</h1><p>أنس البراهمة</p><p>دفعة 2026</p>';
-  book.appendChild(cover);
+function showPage(index) {
+  pages.forEach((page, i) => {
+    page.classList.toggle('active', i === index);
+  });
+}
 
-  for(let i=1;i<=totalPages;i++){
-    const p = document.createElement('div');
-    p.className = 'page right';
-    p.style.zIndex = totalPages - i;
-    p.innerHTML = `<textarea id="p${i}" placeholder="الصفحة ${i}"></textarea>`;
-    book.appendChild(p);
-
-    const saved = localStorage.getItem('p'+i);
-    if(saved) document.getElementById('p'+i).value = saved;
+function nextPage() {
+  if (currentPage < pages.length - 1) {
+    currentPage++;
+    showPage(currentPage);
   }
 }
 
-function nextPage(){
-  if(current < book.children.length){
-    book.children[current].classList.add('flipped');
-    current++;
+function prevPage() {
+  if (currentPage > 0) {
+    currentPage--;
+    showPage(currentPage);
   }
 }
-function prevPage(){
-  if(current > 0){
-    current--;
-    book.children[current].classList.remove('flipped');
-  }
+
+showPage(currentPage);
+
 }
 
 book.addEventListener('input', e=>{
