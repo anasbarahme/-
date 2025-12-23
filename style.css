@@ -1,89 +1,68 @@
-/* تحسينات عامة للموقع */
+/* تنسيق عام */
 body {
     margin: 0;
     padding: 0;
-    background-color: #f0ece2; /* لون خلفية محايد */
+    background-color: #f0ece2;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     font-family: 'Cairo', sans-serif;
+    overflow-x: hidden;
 }
 
 .canvas-area {
-    width: 95vw;
-    height: 85vh;
-    max-width: 1000px;
-    max-height: 700px;
+    width: 900px;
+    height: 600px;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-/* تحسين شكل الورقة وتوسيط المحتوى */
+/* إصلاح مشكلة خروج النص عن الصفحة */
 .page {
     background-color: #fdfaf3;
     border: 1px solid #dcdcdc;
-    box-shadow: inset -5px 0 50px rgba(0,0,0,0.05);
-    padding: 20px;
-    box-sizing: border-box; /* لضمان عدم خروج المحتوى عن الحدود */
+    padding: 40px !important; /* زيادة الحشو الداخلي */
+    box-sizing: border-box;
+    position: relative;
+    direction: rtl; /* التأكد من أن الاتجاه صحيح داخل كل صفحة */
 }
 
 .page-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     width: 100%;
-    justify-content: center; /* توسيط عمودي */
-    text-align: center; /* توسيط أفقي */
-}
-
-/* ضبط شكل النموذج (Form) ليكون أرتب */
-.input-group {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 90%;
-    margin: 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
 }
 
-.input-group label {
-    text-align: right;
-    font-weight: bold;
-    font-size: 0.9rem;
-    color: #4a3f35;
+/* تحسين شكل النموذج ليناسب عرض الصفحة */
+.input-group {
+    width: 100%;
+    max-width: 320px; /* تحديد عرض النموذج لمنعه من التمدد للخارج */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 input, textarea {
-    width: 100%;
+    width: 100% !important;
+    box-sizing: border-box;
     padding: 10px;
     border: 1px solid #c4b49d;
     border-radius: 5px;
-    font-family: 'Cairo', sans-serif;
-    box-sizing: border-box;
+    text-align: right; /* محاذاة النص داخل الخانات لليمين */
 }
 
 button {
+    width: 100%;
     background-color: #4a3f35;
     color: white;
     padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: 0.3s;
-}
-
-button:hover {
-    background-color: #635547;
-}
-
-/* تحسين شكل صفحة الشكر */
-.page-header {
-    margin-bottom: 20px;
-    color: #4a3f35;
-    border-bottom: 2px solid #c4b49d;
-    display: inline-block;
-    align-self: center;
-    padding-bottom: 5px;
 }
