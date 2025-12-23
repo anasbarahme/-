@@ -115,3 +115,15 @@ button {
     z-index: 10;
     cursor: pointer;
 }
+/* إجبار المتصفح على إظهار المربعات فوق أي طبقة للمكتبة */
+input, textarea, button {
+    position: relative !important;
+    z-index: 9999 !important;
+    pointer-events: auto !important; /* السماح بالتفاعل مع العناصر */
+}
+
+/* منع المكتبة من التقاط النقرات فوق منطقة النموذج */
+.input-group {
+    position: relative;
+    z-index: 1000;
+}
