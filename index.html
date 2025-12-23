@@ -1,153 +1,95 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>دفتر التخرج – أنس البراهمة 2026</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+<title>دفتر التخرج</title>
 <style>
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column; 
-  align-items:center;
-  background:#f2f2f2;
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f2f2f2;
+  font-family: 'Amiri', serif;
 }
 
 .book-container {
   width: 900px;
   height: 550px;
-  position:relative;
+  position: relative;
 }
 
-.page{
+.page {
+  width: 100%;
+  height: 100%;
+  background: #fdfaf5;
+  padding: 40px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
   display: none;
-  width:50%;
-  height:100%;
-  background:#fdfaf5;
-  position:absolute;
-  top:0;
-  padding:30px;
-  box-sizing:border-box;
-  box-shadow:0 0 15px rgba(0,0,0,.2);
-  transform-origin:right;
-  transition:transform 0.8s;
-}
-.page.flipped{transform:rotateY(-180deg);}
-.page.active{display:block;}
-
-.cover{
-  background:#6b4f3f;
-  color:#fff;
-  text-align:center;
-}
-.cover h1{margin-top:150px;font-size:32px;}
-
-textarea{
-  width:100%;
-  height:100%;
-  border:none;
-  resize:none;
-  background:transparent;
-  font-family:'Amiri';
-  font-size:18px;
-  outline:none;
 }
 
-.controls{
-  margin-top:15px;
-  display:flex;
-  justify-content:center;
-  gap:10px;
+.page.active {
+  display: block;
 }
 
-button{
-  padding:8px 18px;
-  font-family:'Amiri', serif;
-  font-size:16px;
-  cursor:pointer;
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px 20px;
+  font-size: 16px;
 }
 
-@media(max-width:768px){
-  .book-container{
-    width:95%;
-    height:420px;
-  }
-
-  .page{
-    width:100%;
-    right:0 !important;
-  }
-}
+#prev { left: -120px; }
+#next { right: -120px; }
 </style>
 </head>
 <body>
 
-  <div class="book-container">
-    <div class="book" id="book">
-
-      <!-- الغلاف -->
-      <div class="page cover active">
-        <h1>دفتر التخرج</h1>
-        <h2>أنس البراهمة</h2>
-        <p>دفعة 2026</p>
-      </div>
-
-      <!-- الصفحة الأولى -->
-      <div class="page">
-        <textarea id="page1"></textarea>
-      </div>
-
-    </div>
+<div class="book-container">
+  <div class="page active" id="cover">
+    <h1 style="text-align:center;">دفتر التخرج</h1>
+    <h2 style="text-align:center;">أنس البراهمة</h2>
+    <p style="text-align:center;">دفعة 2026</p>
   </div>
 
-  <!-- الأزرار -->
-  <div class="controls">
-    <button onclick="prevPage()">◀ السابق</button>
-    <button onclick="nextPage()">التالي ▶</button>
-    <button onclick="exportPDF()">تصدير PDF</button>
+  <div class="page">
+    <h3>الصفحة 1</h3>
+    <textarea style="width:100%;height:80%"></textarea>
   </div>
+
+  <div class="page">
+    <h3>الصفحة 2</h3>
+    <textarea style="width:100%;height:80%"></textarea>
+  </div>
+
+  <button id="prev">السابق</button>
+  <button id="next">التالي</button>
+</div>
 
 <script>
-let currentPage = 0;
 const pages = document.querySelectorAll('.page');
+let currentPage = 0;
 
-function showPage(index) {
-  pages.forEach((page, i) => {
-    page.classList.toggle('active', i === index);
-  });
+function showPage(index){
+  pages.forEach((page,i)=> page.classList.remove('active'));
+  pages[index].classList.add('active');
 }
 
-function nextPage() {
-  if (currentPage < pages.length - 1) {
+document.getElementById('next').addEventListener('click', ()=>{
+  if(currentPage < pages.length - 1){
     currentPage++;
     showPage(currentPage);
   }
-}
+});
 
-function prevPage() {
-  if (currentPage > 0) {
+document.getElementById('prev').addEventListener('click', ()=>{
+  if(currentPage > 0){
     currentPage--;
     showPage(currentPage);
   }
-}
-
-showPage(currentPage);
-
-// حفظ النصوص في localStorage
-const book = document.getElementById('book');
-book.addEventListener('input', e=>{
-  if(e.target.tagName==='TEXTAREA'){
-    localStorage.setItem(e.target.id, e.target.value);
-    e.target.disabled = true; // لمنع التعديل بعد الحفظ
-  }
 });
-
-// تصدير PDF (سريع)
-function exportPDF(){
-  window.print();
-}
 </script>
 
 </body>
