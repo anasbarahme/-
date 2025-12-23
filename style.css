@@ -127,3 +127,30 @@ input, textarea, button {
     position: relative;
     z-index: 1000;
 }
+/* التوافق مع الشاشات الصغيرة (الهواتف) */
+@media (max-width: 768px) {
+    .canvas-area {
+        width: 100vw !important; /* يأخذ كامل عرض الشاشة */
+        height: 80vh !important; /* يأخذ 80% من طول الشاشة */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #book {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .page-content {
+        padding: 20px !important; /* تقليل الهوامش لتوفير مساحة */
+    }
+
+    .page-cover h1 {
+        font-size: 1.5rem !important;
+    }
+
+    input, textarea {
+        font-size: 14px !important; /* تصغير الخط قليلاً ليناسب الشاشة */
+    }
+}
