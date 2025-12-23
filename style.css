@@ -104,3 +104,14 @@ button {
     align-items: center;
     color: white !important;
 }
+input, textarea {
+    position: relative;
+    z-index: 10; /* يضمن أن المربع فوق أي طبقة تقليب */
+    cursor: text; /* يغير شكل الماوس لعلامة الكتابة */
+}
+
+button {
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+}
