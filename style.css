@@ -68,25 +68,41 @@ button {
     cursor: pointer;
     font-weight: bold;
 }
-/* تنسيق صورة الغلاف */
-.profile-img-container {
-    width: 20px;
-    height: 20px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    border: 5px solid #fdfaf3; /* إطار أبيض حول الصورة */
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+.page-cover {
+    /* ضع اسم صورتك هنا */
+    background-image: url('my-photo.jpg'); 
+    background-size: cover; /* تجعل الصورة تغطي كامل الصفحة */
+    background-position: center; /* توسيط الصورة */
+    background-repeat: no-repeat;
+    position: relative;
+    color: white !important; /* تغيير لون النص للأبيض ليظهر فوق الصورة */
 }
 
-.profile-img {
+/* إضافة طبقة ظلية فوق الصورة لكي يسهل قراءة الكلام */
+.cover-overlay {
+    background: rgba(0, 0, 0, 0.4); /* طبقة سوداء شفافة بنسبة 40% */
     width: 100%;
     height: 100%;
-    object-fit: cover; /* لضمان عدم تمدد الصورة بشكل خاطئ */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-/* تعديل حجم الخط للعنوان تحت الصورة */
 .page-cover h1 {
-    font-size: 1.8rem !important;
-    margin-top: 10px;
+    font-size: 2.2rem;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.8); /* ظل للنص لزيادة الوضوح */
+    margin-bottom: 10px;
+}
+
+.page-cover p {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+}
+
+.decoration {
+    font-size: 60px;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
 }
