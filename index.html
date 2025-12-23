@@ -10,7 +10,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f2f2f2;
+  background: #e0e0e0;
   font-family: 'Amiri', serif;
 }
 
@@ -18,97 +18,127 @@ body {
   width: 900px;
   height: 550px;
   position: relative;
+  perspective: 2000px;
 }
 
 .page {
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   background: #fdfaf5;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  transform-origin: left;
+  transition: transform 0.8s, z-index 0s 0.8s;
+  border-radius: 10px;
+  overflow: hidden;
   padding: 40px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  display: none;
 }
 
-.page.active {
-  display: block;
+.page textarea {
+  width: 100%;
+  height: 80%;
+  resize: none;
+  font-size: 16px;
+  font-family: 'Amiri', serif;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+  z-index: 0;
+  transition: transform 0.8s;
 }
 
 button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  padding: 10px 20px;
+  padding: 12px 25px;
   font-size: 16px;
+  border: none;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1000;
 }
 
-#prev { left: -120px; }
-#next { right: -120px; }
+button:hover {
+  background-color: #357ab8;
+}
+
+#prev { left: -150px; }
+#next { right: -150px; }
+
+.cover {
+  background: #ffe5b4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover h1, .cover h2, .cover p {
+  margin: 10px;
+  text-align: center;
+}
 </style>
 </head>
 <body>
 
 <div class="book-container">
-  <div class="page active" id="cover">
-    <h1 style="text-align:center;">دفتر التخرج</h1>
-    <h2 style="text-align:center;">أنس البراهمة</h2>
-    <p style="text-align:center;">دفعة 2026</p>
+
+  <!-- الغلاف -->
+  <div class="page cover"> 
+    <h1>دفتر التخرج</h1>
+    <h2>أنس البراهمة</h2>
+    <p>دفعة 2026</p>
   </div>
 
-  <div class="page">
-    <h3>الصفحة 1</h3>
-    <textarea style="width:100%;height:80%"></textarea>
-  </div>
+  <!-- الصفحات سيتم توليدها ديناميكيًا بالـ JS -->
 
-  <div class="page">
-    <h3>الصفحة 2</h3>
-    <textarea style="width:100%;height:80%"></textarea>
-  </div>
-
-  <button id="prev">السابق</button>
-  <button id="next">التالي</button>
 </div>
 
+<!-- أزرار التحكم -->
+<button id="prev">السابق</button>
+<button id="next">التالي</button>
+
 <script>
+// توليد 100 صفحة بعد الغلاف
 const bookContainer = document.querySelector('.book-container');
 
-// توليد 100 صفحة تلقائيًا بعد الغلاف
 for(let i=1; i<=100; i++){
   const page = document.createElement('div');
   page.className = 'page';
-  page.innerHTML = `<h3>الصفحة ${i}</h3><textarea style="width:100%;height:80%"></textarea>`;
+  page.innerHTML = `<h3>الصفحة ${i}</h3><textarea></textarea>`;
   bookContainer.appendChild(page);
 }
 
-// الآن بعد أن أصبحت كل الصفحات موجودة
+// جميع الصفحات بما فيها الغلاف
 const pages = document.querySelectorAll('.page');
 let currentPage = 0;
 
-// عرض الصفحة حسب رقمها
-function showPage(index){
-  pages.forEach((page,i)=>{
-    page.style.display = i === index ? 'block' : 'none';
-  });
-}
+// إظهار الغلاف أولًا
+pages.forEach((p,i)=>{
+  p.style.zIndex = pages.length - i;
+});
 
-// أزرار التالي/السابق
+// أزرار التالي / السابق
 document.getElementById('next').addEventListener('click', ()=>{
   if(currentPage < pages.length - 1){
+    pages[currentPage].classList.add('flipped');
     currentPage++;
-    showPage(currentPage);
   }
 });
 
 document.getElementById('prev').addEventListener('click', ()=>{
   if(currentPage > 0){
     currentPage--;
-    showPage(currentPage);
+    pages[currentPage].classList.remove('flipped');
   }
 });
-
-// عرض الصفحة الأولى عند فتح الموقع
-showPage(currentPage);
 </script>
-
 
 </body>
 </html>
