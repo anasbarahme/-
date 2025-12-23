@@ -1,4 +1,4 @@
-/* تنسيق عام */
+/* تنسيق عام للموقع */
 body {
     margin: 0;
     padding: 0;
@@ -8,53 +8,54 @@ body {
     align-items: center;
     min-height: 100vh;
     font-family: 'Cairo', sans-serif;
-    overflow-x: hidden;
 }
 
+/* حاوية الكتاب: نلغي الـ RTL هنا لضمان عمل المكتبة برمجياً بشكل صحيح */
 .canvas-area {
+    direction: ltr !important; 
     width: 900px;
     height: 600px;
-    display: flex;
-    justify-content: center;
 }
 
-/* إصلاح مشكلة خروج النص عن الصفحة */
+/* تنسيق الصفحات */
 .page {
     background-color: #fdfaf3;
     border: 1px solid #dcdcdc;
-    padding: 40px !important; /* زيادة الحشو الداخلي */
     box-sizing: border-box;
-    position: relative;
-    direction: rtl; /* التأكد من أن الاتجاه صحيح داخل كل صفحة */
+    /* نعيد الـ RTL داخل الصفحة فقط للنصوص */
+    direction: rtl !important; 
 }
 
+/* أهم تعديل: إضافة هوامش لمنع التداخل مع منتصف الكتاب */
 .page-content {
     width: 100%;
     height: 100%;
+    padding: 40px 50px; /* زيادة الهوامش الجانبية */
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
     text-align: center;
 }
 
-/* تحسين شكل النموذج ليناسب عرض الصفحة */
+/* تنسيق النموذج ليكون في المنتصف تماماً */
 .input-group {
     width: 100%;
-    max-width: 320px; /* تحديد عرض النموذج لمنعه من التمدد للخارج */
+    max-width: 300px; /* تحديد عرض النموذج */
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 20px;
+    gap: 15px;
+    margin: 20px auto 0;
 }
 
 input, textarea {
     width: 100% !important;
-    box-sizing: border-box;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #c4b49d;
-    border-radius: 5px;
-    text-align: right; /* محاذاة النص داخل الخانات لليمين */
+    border-radius: 8px;
+    background: rgba(255,255,255,0.6);
+    font-family: 'Cairo', sans-serif;
+    text-align: right; /* محاذاة الكتابة لليمين */
 }
 
 button {
@@ -63,6 +64,7 @@ button {
     color: white;
     padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: bold;
 }
