@@ -20,10 +20,10 @@ body {
 /* تنسيق الصفحات */
 .page {
     background-color: #fdfaf3;
+    background-image: radial-gradient(#e5e5f7 0.5px, transparent 0.5px);
+    background-size: 20px 20px; /* يعطي شكل الورق المنقط الخفيف */
     border: 1px solid #dcdcdc;
-    box-sizing: border-box;
-    /* نعيد الـ RTL داخل الصفحة فقط للنصوص */
-    direction: rtl !important; 
+    box-shadow: inset -10px 0 20px rgba(0,0,0,0.05); /* ظل عند ثنية الكتاب */
 }
 
 /* أهم تعديل: إضافة هوامش لمنع التداخل مع منتصف الكتاب */
