@@ -1,36 +1,42 @@
-// دالة لتحديد مقاسات الكتاب بناءً على نوع الجهاز
-function getBookSettings() {
-    if (window.innerWidth <= 768) {
-        return {
-            width: window.innerWidth, // عرض الهاتف بالكامل
-            height: window.innerHeight * 0.8, // 80% من طول الشاشة
-            mode: "portrait" // وضع الصفحة الواحدة
-        };
-    } else {
-        return {
-            width: 450,
-            height: 600,
-            mode: "landscape" // وضع الصفحتين للكمبيوتر
-        };
+function initPageFlip() {
+    const bookContainer = document.getElementById("book");
+    const isMobile = window.innerWidth <= 768;
+
+    // تدمير أي نسخة قديمة إذا وجدت (لتجنب التداخل)
+    if (window.pageFlip) {
+        window.pageFlip.destroy();
     }
+
+    // إعدادات مخصصة تماماً لكل جهاز
+    const settings = {
+        width: isMobile ? window.innerWidth : 450,
+        height: isMobile ? window.innerHeight * 0.8 : 600,
+        size: isMobile ? "fixed" : "stretch", // استخدام fixed للجوال يمنع التمدد الخاطئ
+        showCover: true,
+        usePortrait: isMobile, // صفحة واحدة للجوال
+        disableFlipByClick: true, // لمنع مشكلة الكتابة
+        swipeDistance: 30,
+        clickEventForward: false,
+        useMouseEvents: true
+    };
+
+    window.pageFlip = new St.PageFlip(bookContainer, settings);
+    window.pageFlip.loadFromHTML(document.querySelectorAll(".page"));
 }
 
-const settings = getBookSettings();
+// تشغيل عند التحميل
+window.addEventListener('DOMContentLoaded', initPageFlip);
 
-const pageFlip = new St.PageFlip(document.getElementById("book"), {
-    width: settings.width,
-    height: settings.height,
-    size: "stretch",
-    showCover: true,
-    usePortrait: settings.mode === "portrait", // تفعيل وضع الصفحة الواحدة للجوال
-    disableFlipByClick: true, // منع التقليب عند النقر للكتابة
-    clickEventForward: false,
-    swipeDistance: 30
+// إعادة التشغيل عند تدوير الشاشة بذكاء (بعد ثانية واحدة لضمان استقرار الأبعاد)
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(initPageFlip, 500);
 });
 
-pageFlip.loadFromHTML(document.querySelectorAll(".page"));
-
-// إعادة تحميل الصفحة عند تدوير الهاتف لضبط الأبعاد الجديدة
-window.onresize = function() {
-    location.reload();
-};
+// منع التقليب عند الضغط على المدخلات
+document.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') {
+        e.stopPropagation();
+    }
+}, true);
