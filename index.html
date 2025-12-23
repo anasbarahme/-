@@ -1,201 +1,56 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>دفتر التخرج الحقيقي</title>
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #e0e0e0;
-  font-family: 'Amiri', serif;
-}
-
-.book-container {
-  width: 1000px;
-  height: 550px;
-  position: relative;
-  perspective: 2000px;
-}
-
-.page {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  transform-style: preserve-3d;
-  transition: transform 1s;
-  z-index: 0;
-}
-
-.half {
-  width: 50%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  background: #fdfaf5;
-  padding: 30px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 10px;
-}
-
-.left { left: 0; transform-origin: left; }
-.right { right: 0; transform-origin: right; }
-
-.half textarea {
-  width: 100%;
-  height: 80%;
-  resize: none;
-  font-size: 16px;
-  font-family: 'Amiri', serif;
-}
-
-.page.flipped {
-  transform: rotateY(-180deg);
-}
-
-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 12px 25px;
-  font-size: 16px;
-  border: none;
-  background-color: #4a90e2;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  z-index: 1000;
-}
-
-button:hover { background-color: #357ab8; }
-#prev { left: -180px; }
-#next { right: -180px; }
-
-.cover .half {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  background: #ffe5b4;
-}
-
-.page-footer {
-  text-align: center;
-  font-size: 14px;
-  color: #555;
-  margin-top: 5px;
-}
-
-#savePdf {
-  position: absolute;
-  bottom: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  background-color: #28a745;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-}
-#savePdf:hover { background-color: #218838; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دفتر تخرج تفاعلي</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Reem+Kufi&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="book-container">
-  <!-- الغلاف -->
-  <div class="page">
-    <div class="half left cover">دفتر التخرج</div>
-    <div class="half right cover">أنس البراهمة<br>دفعة 2026</div>
-  </div>
-</div>
+    <div class="canvas-area">
+        <div class="flip-book" id="book">
+            
+            <div class="page page-cover" data-density="hard">
+                <div class="page-content">
+                    <h1>دفتر ذكريات التخرج</h1>
+                    <div class="decoration">🎓</div>
+                    <p>دفعة 2025</p>
+                    <small>اسحب الصفحة للبدء</small>
+                </div>
+            </div>
 
-<button id="prev">السابق</button>
-<button id="next">التالي</button>
-<button id="savePdf">حفظ كـ PDF</button>
+            <div class="page">
+                <div class="page-content">
+                    <h2 class="page-header">اترك بصمتك</h2>
+                    <div class="input-group">
+                        <input type="text" id="guestName" placeholder="اسمك الكريم">
+                        <textarea id="guestMessage" placeholder="اكتب كلمة للخريج..."></textarea>
+                        <button onclick="addMessage()">إضافة إلى الدفتر ✨</button>
+                    </div>
+                </div>
+            </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-// توليد 100 صفحة مزدوجة بعد الغلاف
-const bookContainer = document.querySelector('.book-container');
-for(let i=1; i<=100; i++){
-  const page = document.createElement('div');
-  page.className = 'page';
-  page.innerHTML = `
-    <div class="half left">
-      <textarea placeholder="صفحة يسرى ${i}"></textarea>
-      <div class="page-footer">الصفحة ${i*2-1}</div>
+            <div class="page">
+                <div class="page-content">
+                    <h2 class="page-header">رسائل الأصدقاء</h2>
+                    <div id="messagesContainer" class="messages-list">
+                        </div>
+                </div>
+            </div>
+
+            <div class="page page-cover" data-density="hard">
+                <div class="page-content">
+                    <h2>نهاية الدفتر</h2>
+                    <p>شكراً لكونكم جزءاً من رحلتي</p>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="half right">
-      <textarea placeholder="صفحة يمنى ${i}"></textarea>
-      <div class="page-footer">الصفحة ${i*2}</div>
-    </div>
-  `;
-  bookContainer.appendChild(page);
-}
 
-// كل الصفحات
-const pages = document.querySelectorAll('.page');
-let currentPage = 0;
-pages.forEach((p,i)=> p.style.zIndex = pages.length - i);
-
-// تحميل البيانات من LocalStorage
-pages.forEach((page, index) => {
-  const textareas = page.querySelectorAll('textarea');
-  textareas.forEach((ta, idx) => {
-    const key = 'page_'+(index*2 + idx);
-    const saved = localStorage.getItem(key);
-    if(saved) ta.value = saved;
-    ta.addEventListener('input', () => localStorage.setItem(key, ta.value));
-  });
-});
-
-// أزرار التحكم
-document.getElementById('next').addEventListener('click', ()=>{
-  if(currentPage < pages.length - 1){
-    pages[currentPage].classList.add('flipped');
-    currentPage++;
-  }
-});
-document.getElementById('prev').addEventListener('click', ()=>{
-  if(currentPage > 0){
-    currentPage--;
-    pages[currentPage].classList.remove('flipped');
-  }
-});
-
-// حفظ كل الصفحات كـ PDF
-document.getElementById('savePdf').addEventListener('click', ()=>{
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF('p','pt','a4');
-  let y = 40;
-
-  pages.forEach((page, index)=>{
-    const textareas = page.querySelectorAll('textarea');
-    textareas.forEach((ta, idx)=>{
-      const text = ta.value || '';
-      const lines = doc.splitTextToSize(text, 500);
-      doc.text(`الصفحة ${index*2+idx+1}`, 40, y);
-      doc.text(lines, 40, y+20);
-      doc.addPage();
-    });
-  });
-
-  doc.save('دفتر_التخرج.pdf');
-});
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
