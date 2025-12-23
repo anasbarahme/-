@@ -22,23 +22,28 @@
             </div>
 
             <div class="page">
-                <div class="page-content">
-                    <h2 class="page-header">اترك بصمتك</h2>
-                    <div class="input-group">
-                        <input type="text" id="guestName" placeholder="اسمك الكريم">
-                        <textarea id="guestMessage" placeholder="اكتب كلمة للخريج..."></textarea>
-                        <button onclick="addMessage()">إضافة إلى الدفتر ✨</button>
-                    </div>
-                </div>
-            </div>
+    <div class="page-content">
+        <h2 class="page-header">أرسل تهنئة خاصة</h2>
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="input-group">
+            <label>اسمك:</label>
+            <input type="text" name="name" required placeholder="اكتب اسمك هنا">
+            
+            <label>رسالتك (ستصل للخريج فقط):</label>
+            <textarea name="message" required placeholder="اكتب رسالتك السرية هنا..."></textarea>
+            
+            <button type="submit">إرسال الرسالة بخصوصية 🔒</button>
+        </form>
+    </div>
+</div>
 
             <div class="page">
-                <div class="page-content">
-                    <h2 class="page-header">رسائل الأصدقاء</h2>
-                    <div id="messagesContainer" class="messages-list">
-                        </div>
-                </div>
-            </div>
+    <div class="page-content" style="text-align: center;">
+        <h2 class="page-header">شكراً لكم!</h2>
+        <p>تم استلام رسالتك بنجاح وسأقرؤها بكل حب.</p>
+        <div class="decoration" style="font-size: 50px;">✉️</div>
+        <p style="font-style: italic; color: #888;">"الذكريات هي الثروة الحقيقية"</p>
+    </div>
+</div>
 
             <div class="page page-cover" data-density="hard">
                 <div class="page-content">
