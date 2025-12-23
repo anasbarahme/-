@@ -6,14 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 <style>
-body{
-  margin:0;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  background:#d6cfc4;font-family:'Amiri',serif;
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center; /* توسيط أفقي */
+  align-items: center;     /* توسيط عمودي */
+  background: #f2f2f2;
 }
-.book{
-  width:90%;max-width:1000px;height:520px;position:relative;
-  perspective:2000px;
+
+.book-container {
+  width: 900px;
+  height: 550px;
 }
+
 .page{
   width:50%;height:100%;background:#fdfaf5;position:absolute;top:0;
   padding:30px;box-sizing:border-box;
