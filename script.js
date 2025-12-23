@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. إعداد الكتاب
+    // إعداد حركة تقليب الصفحات
     const pageFlip = new St.PageFlip(document.getElementById("book"), {
         width: 450, // عرض الصفحة الواحدة
         height: 600, // طول الصفحة
@@ -10,32 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
         maxHeight: 1350,
         maxShadowOpacity: 0.5,
         showCover: true,
-        mobileScrollSupport: false
+        mobileScrollSupport: false // لضمان تجربة لمس سلسة
     });
 
-    // تحميل الصفحات من الـ HTML
+    // تحميل الصفحات
     pageFlip.loadFromHTML(document.querySelectorAll(".page"));
 
-    // 2. وظيفة إضافة الرسائل
-    window.addMessage = function() {
-        const name = document.getElementById('guestName').value;
-        const msg = document.getElementById('guestMessage').value;
-        const container = document.getElementById('messagesContainer');
-
-        if (name && msg) {
-            const div = document.createElement('div');
-            div.className = 'message-item';
-            div.innerHTML = `<strong>${name}:</strong> ${msg}`;
-            
-            container.appendChild(div);
-
-            // مسح الخانات بعد الكتابة
-            document.getElementById('guestName').value = '';
-            document.getElementById('guestMessage').value = '';
-            
-            alert('تمت إضافة رسالتك للدفتر بنجاح!');
-        } else {
-            alert('يرجى كتابة الاسم والرسالة');
-        }
-    }
+    // وظيفة إضافية للتأكد من أن النموذج لا يعطل حركة الصفحات
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('mousedown', (e) => e.stopPropagation());
+    });
 });
