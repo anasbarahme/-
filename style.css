@@ -127,24 +127,27 @@ input, textarea, button {
     position: relative;
     z-index: 1000;
 }
+/* إجبار الحاوية على التوسع في الجوال */
 @media (max-width: 768px) {
-    body {
-        overflow-x: hidden; /* منع الاهتزاز الجانبي */
-    }
-    
     .canvas-area {
-        width: 100vw !important;
+        width: 100% !important;
         height: 100vh !important;
+        min-width: unset !important;
+        max-width: 100vw !important;
         padding: 0 !important;
-        margin: 0 !important;
+        overflow: hidden;
+    }
+
+    #book {
+        margin: auto !important;
     }
 
     .page {
-        width: 100% !important;
-        height: 100% !important;
+        width: 100vw !important;
+        height: 80vh !important;
     }
-    
+
     .page-content {
-        padding: 15px !important; /* توفير مساحة أكبر للعناصر */
+        padding: 20px 15px !important;
     }
 }
