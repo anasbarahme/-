@@ -6,68 +6,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center; /* توسيط أفقي */
-  align-items: center;     /* توسيط عمودي */
-  background: #f2f2f2;
-}
-  .page.active {
-  display: block;
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column; 
+  align-items:center;
+  background:#f2f2f2;
 }
 
 .book-container {
   width: 900px;
   height: 550px;
+  position:relative;
 }
 
 .page{
   display: none;
-  width:50%;height:100%;background:#fdfaf5;position:absolute;top:0;
-  padding:30px;box-sizing:border-box;
+  width:50%;
+  height:100%;
+  background:#fdfaf5;
+  position:absolute;
+  top:0;
+  padding:30px;
+  box-sizing:border-box;
   box-shadow:0 0 15px rgba(0,0,0,.2);
   transform-origin:right;
   transition:transform 0.8s;
 }
-.page.left{right:50%;border-left:1px solid #ccc;}
-.page.right{right:0;}
 .page.flipped{transform:rotateY(-180deg);}
+.page.active{display:block;}
+
 .cover{
-  background:#6b4f3f;color:#fff;text-align:center;
+  background:#6b4f3f;
+  color:#fff;
+  text-align:center;
 }
 .cover h1{margin-top:150px;font-size:32px;}
+
 textarea{
-  width:100%;height:100%;border:none;resize:none;background:transparent;
-  font-family:'Amiri';font-size:18px;outline:none;
+  width:100%;
+  height:100%;
+  border:none;
+  resize:none;
+  background:transparent;
+  font-family:'Amiri';
+  font-size:18px;
+  outline:none;
 }
-.controls{margin:15px;display:flex;gap:10px;}
-button{padding:8px 18px;font-family:'Amiri';font-size:16px;cursor:pointer;}
+
+.controls{
+  margin-top:15px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+button{
+  padding:8px 18px;
+  font-family:'Amiri', serif;
+  font-size:16px;
+  cursor:pointer;
+}
+
 @media(max-width:768px){
-  .book{height:420px;}
-  .page{width:100%;right:0 !important;}
+  .book-container{
+    width:95%;
+    height:420px;
+  }
+
+  .page{
+    width:100%;
+    right:0 !important;
+  }
 }
 </style>
 </head>
 <body>
-   <div class="book-container">
-    <div class="book">
+
+  <div class="book-container">
+    <div class="book" id="book">
+
+      <!-- الغلاف -->
       <div class="page cover active">
-  <h1>دفتر التخرج</h1>
-  <h2>أنس البراهمة</h2>
-  <p>دفعة 2026</p>
-</div>
+        <h1>دفتر التخرج</h1>
+        <h2>أنس البراهمة</h2>
+        <p>دفعة 2026</p>
+      </div>
 
-<div class="page">
-  <textarea></textarea>
-</div>
+      <!-- الصفحة الأولى -->
+      <div class="page">
+        <textarea id="page1"></textarea>
+      </div>
 
+    </div>
+  </div>
 
-  <button onclick="prevPage()">◀ السابق</button>
-  <button onclick="nextPage()">التالي ▶</button>
-  <button onclick="exportPDF()">تصدير PDF</button>
-</div>
+  <!-- الأزرار -->
+  <div class="controls">
+    <button onclick="prevPage()">◀ السابق</button>
+    <button onclick="nextPage()">التالي ▶</button>
+    <button onclick="exportPDF()">تصدير PDF</button>
+  </div>
 
 <script>
 let currentPage = 0;
@@ -95,19 +135,19 @@ function prevPage() {
 
 showPage(currentPage);
 
-}
-
+// حفظ النصوص في localStorage
+const book = document.getElementById('book');
 book.addEventListener('input', e=>{
   if(e.target.tagName==='TEXTAREA'){
     localStorage.setItem(e.target.id, e.target.value);
+    e.target.disabled = true; // لمنع التعديل بعد الحفظ
   }
 });
 
+// تصدير PDF (سريع)
 function exportPDF(){
   window.print();
 }
-
-createPages();
 </script>
 
 </body>
