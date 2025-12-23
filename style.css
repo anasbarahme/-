@@ -127,29 +127,24 @@ input, textarea, button {
     position: relative;
     z-index: 1000;
 }
-/* تنسيقات خاصة للهاتف فقط */
 @media (max-width: 768px) {
+    body {
+        overflow-x: hidden; /* منع الاهتزاز الجانبي */
+    }
+    
     .canvas-area {
-        width: 100vw !important; /* عرض كامل الشاشة */
-        height: 90vh !important; /* ارتفاع مناسب */
-        margin: 0;
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
-    .page-content {
-        padding: 20px !important; /* تقليل الهوامش الداخلية */
-    }
-
-    .input-group {
-        max-width: 90% !important; /* تكبير مربعات النص */
-    }
-
-    .page-cover h1 {
-        font-size: 1.4rem !important; /* ضبط حجم الخط */
-    }
-
-    /* إخفاء الظلال الثقيلة التي قد تبطئ الهاتف */
     .page {
-        box-shadow: none !important;
-        border: none !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    .page-content {
+        padding: 15px !important; /* توفير مساحة أكبر للعناصر */
     }
 }
