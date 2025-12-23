@@ -69,42 +69,31 @@ button {
     font-weight: bold;
 }
 .page-cover {
-    /* استبدل my-photo.jpg باسم ملف صورتك الموجود في المجلد */
-    background-image: url('my-photo.jpg'); 
-    background-size: cover; /* تجعل الصورة تمتد لتغطي كامل الصفحة دون خروج */
-    background-position: center; /* تضمن توسط الصورة في الغلاف */
-    background-repeat: no-repeat;
     position: relative;
-    border: none !important;
+    overflow: hidden; /* لمنع الصورة من الخروج عن الدفتر */
+    padding: 0 !important; /* إلغاء الحواف للغلاف فقط */
 }
 
-/* الطبقة التي تجعل النص واضحاً فوق صورتك */
+.cover-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1; /* لجعلها خلف النصوص */
+}
+
 .cover-overlay {
-    background: rgba(0, 0, 0, 0.45); /* طبقة تظليل داكنة شفافة */
+    position: relative;
+    z-index: 2; /* لجعل النصوص فوق الصورة */
+    background: rgba(0, 0, 0, 0.45); /* طبقة تظليل لضمان وضوح النص */
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white !important; /* النص باللون الأبيض للتباين مع الصورة */
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.page-cover h1 {
-    font-size: 2.2rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-    margin: 0;
-}
-
-.page-cover p {
-    font-size: 1.4rem;
-    margin: 10px 0;
-}
-
-.decoration {
-    font-size: 50px;
-    margin: 15px 0;
+    color: white !important;
 }
